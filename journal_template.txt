@@ -1,0 +1,6 @@
+WEEKDAY DD MON YYYY
+
+- Daily_Events
+
+Generated		HH:MM:SS DD Mon YYYY
+Last modified	HH:MM:SS DD Mon YYYY
