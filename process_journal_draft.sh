@@ -70,7 +70,7 @@ do
 	then
 		# # This line ought to convert quadruple spaces to tabs - but it unfortunately also converts quadruple tabs to tabs
 		# cleaned_draft_array+=("$(printf "$current_line" | sed -r 's/[[:space:]]{4}/\t/g')");
-		cleaned_draft_array+=$current_line;
+		cleaned_draft_array+=( "$(printf "$current_line")" );
 	fi
 done
 
