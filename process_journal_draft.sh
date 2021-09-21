@@ -68,7 +68,9 @@ do
 	current_line="${journal_draft_array[$i]}";
 	if [[ ! $current_line =~ ^[[:space:]]*$ ]];
 	then
-		cleaned_draft_array+=("$(printf "$current_line" | sed -r 's/[[:space:]]{4}/\t/g')");
+		# # This line ought to convert quadruple spaces to tabs - but it unfortunately also converts quadruple tabs to tabs
+		# cleaned_draft_array+=("$(printf "$current_line" | sed -r 's/[[:space:]]{4}/\t/g')");
+		cleaned_draft_array+=$current_line;
 	fi
 done
 
