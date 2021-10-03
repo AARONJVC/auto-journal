@@ -1,9 +1,9 @@
 #!/bin/bash
 
 script_source=`pwd`;
-journal_draft_target="${script_source}\journal_draft.txt";
+journal_draft_target="${script_source}\Static\journal_draft.txt";
 log_target="${script_source}\Logs\auto_journal_log.txt";
-archive_target=`./Secrets/set_archive_target.sh`;
+archive_target=`./Configuration/set_archive_target.sh`;
 
 date_generated=`date +%T-%A-%d-%b-%m-%Y`;
 
@@ -47,7 +47,7 @@ unset IFS;
 weekday="${date_data_array[1]}";
 day="${date_data_array[2]}";
 month="${date_data_array[3]}";
-# month_num="${date_data_array[4]}";
+month_num="${date_data_array[4]}";
 year="${date_data_array[5]}";
 gen_time="${date_data_array[6]}";
 gen_day="${date_data_array[8]}";
@@ -57,7 +57,7 @@ gen_year="${date_data_array[11]}";
 journal_date_desc="$(echo $weekday | tr '[:lower:]' '[:upper:]') $day $(echo $month | tr '[:lower:]' '[:upper:]') $year";
 generated_desc="$gen_time $gen_day $gen_month $gen_year";
 journal_file_name="${day}_$(echo $month | tr '[:upper:]' '[:lower:]')_${year}.txt";
-month_folder_name="${month}_${year}";
+month_folder_name="${month_num}_${month}_${year}";
 year_folder_name="$year";
 
 printf -- "Journal Draft Processor\n\tRunning at ${generated_desc}\n\t${mode} mode with target: ${day} ${month} ${year}\n" >> "$log_target";

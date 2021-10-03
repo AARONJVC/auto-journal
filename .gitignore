@@ -1,9 +1,9 @@
 # Workspace files frequently edited that shouldn't be tracked
 journal_draft.txt
-journal_workspace.txt
 
 # Logging should not be tracked
 /Logs
 
 # Secrets include private absolute filenames needed to configure journal archive targets
-/Secrets
+/Configuration
+/Dev_Archive
