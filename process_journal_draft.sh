@@ -7,6 +7,20 @@ archive_target=`./Configuration/set_archive_target.sh`;
 
 date_generated=`date +%T-%A-%d-%b-%m-%Y`;
 
+# Storing the data in an array
+declare -a date_data_array=();
+IFS="-";
+read -ra date_data_array <<< "${date_generated}";
+unset IFS;
+
+# Extracting data for use
+gen_time="${date_data_array[0]}";
+gen_day="${date_data_array[2]}";
+gen_month="${date_data_array[3]}";
+gen_year="${date_data_array[5]}";
+
+generated_desc="$gen_time $gen_day $gen_month $gen_year";
+
 # Get the journal content
 declare -a journal_draft_array=();
 mapfile -t journal_draft_array < "$journal_draft_target";
@@ -20,13 +34,13 @@ date_cmd_option="";
 # Determine target date source mode
 if [ "$#" -gt "0" ];
 then
-	date_cmd_option=" -d \"$@\"";
+	date_arg="$@";
 	mode="Command Args";
 else
 	# Detect a date explicitly placed in the drafting area
 	if [[ ${journal_draft_array[0]} =~ ^[0-9]{1,2}[[:space:]][a-zA-Z]{3,}[[:space:]][0-9]{4}.*$ ]];
 	then
-		date_cmd_option=" -d \"${journal_draft_array[0]}\"";
+		date_arg="${journal_draft_array[0]}";
 		journal_draft_array=("${journal_draft_array[@]/${journal_draft_array[0]}}");
 		mode="Draft Args";
 	else
@@ -34,13 +48,20 @@ else
 	fi
 fi
 
-date_cmd_str="raw_date=\$(date${date_cmd_option} +%T-%A-%d-%b-%m-%Y)";
+date_cmd_str="raw_date=\$(date -d \"${date_arg}\" +%T-%A-%d-%b-%m-%Y 2> /dev/null)";
 command eval $date_cmd_str;
 
+if [[ $? -ne "0" ]];
+then
+	printf -- "Journal Draft Processor\n\tFailed on ${generated_desc}\n\t${mode} mode received a malformed date\n\t\tThe argument was: ${date_arg}\n\n" >> "$log_target";
+	printf -- "Failed due to malformed date argument: ${date_arg}\nTry again with a proper date.\n";
+	exit 1
+fi
+
 # Storing the data in an array
-declare -a date_data_array=();
+date_data_array=();
 IFS="-";
-read -ra date_data_array <<< "${raw_date}-${date_generated}";
+read -ra date_data_array <<< "${raw_date}";
 unset IFS;
 
 # Extracting data for use
@@ -49,13 +70,8 @@ day="${date_data_array[2]}";
 month="${date_data_array[3]}";
 month_num="${date_data_array[4]}";
 year="${date_data_array[5]}";
-gen_time="${date_data_array[6]}";
-gen_day="${date_data_array[8]}";
-gen_month="${date_data_array[9]}";
-gen_year="${date_data_array[11]}";
 
 journal_date_desc="$(echo $weekday | tr '[:lower:]' '[:upper:]') $day $(echo $month | tr '[:lower:]' '[:upper:]') $year";
-generated_desc="$gen_time $gen_day $gen_month $gen_year";
 journal_file_name="${day}_$(echo $month | tr '[:upper:]' '[:lower:]')_${year}.txt";
 month_folder_name="${month_num}_${month}_${year}";
 year_folder_name="$year";
