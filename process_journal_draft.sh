@@ -2,7 +2,7 @@
 
 script_source=`pwd`;
 journal_draft_target="${script_source}\Static\journal_draft.txt";
-log_target="${script_source}\Logs\auto_journal_log.txt";
+log_target=`./Configuration/set_logging_target.sh`;
 archive_target=`./Configuration/set_archive_target.sh`;
 
 date_generated=`date +%T-%A-%d-%b-%m-%Y`;

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-environment="dev";
+environment="prod";
 
 echo "$environment";
