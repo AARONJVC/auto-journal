@@ -7,3 +7,6 @@ journal_draft.txt
 # Secrets include private absolute filenames needed to configure journal archive targets
 /Configuration
 /Dev_Archive
+
+# Don't include the setup testing space
+/test_setup
