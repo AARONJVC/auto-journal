@@ -14,9 +14,21 @@ archive_script_name="set_archive_target.sh";
 if [[ ! -f "${config_dir}\\${archive_script_name}" ]];
 then
     
-    printf "Enter an absolute filepath where you'd like journal entries to be stored:\n";
+    valid=0;
 
-    read -r archive_target;
+    while [ "$valid" == 0 ];
+    do
+        printf "Enter an absolute filepath where you'd like journal entries to be stored:\n";
+        read -r archive_target;
+
+        if [[ -d "$archive_target" ]];
+        then
+            valid=1;
+        else
+            clear;
+            printf "Invalid. ";
+        fi
+    done
     
     archive_script_text="#!/bin/bash
 
@@ -36,3 +48,10 @@ then
     mkdir "$logging_dir";
     touch "${logging_dir}\\${logfile_name}";
 fi
+
+
+
+
+
+# Finish by deleting self
+# rm $0;
