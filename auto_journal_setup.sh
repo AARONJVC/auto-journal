@@ -1,8 +1,8 @@
 #!/bin/bash
 
-config_dir="Configuration";
+config_dir="configuration";
 
-# Make the Configuration folder
+# Make the configuration folder
 if [[ ! -d "$config_dir" ]];
 then
     mkdir "$config_dir";
@@ -39,10 +39,10 @@ echo \"\$archive_target\";";
     echo "$archive_script_text" >> "${config_dir}\\${archive_script_name}";
 fi
 
-logging_dir="Logs";
+logging_dir="logs";
 logfile_name="auto_journal_log.txt";
 
-# Make the Logs folder
+# Make the logs folder
 if [[ ! -d "$logging_dir" ]];
 then
     mkdir "$logging_dir";

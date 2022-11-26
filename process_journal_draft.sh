@@ -1,9 +1,9 @@
 #!/bin/bash
 
 script_source=`pwd`;
-journal_draft_target="${script_source}\Static\journal_draft.txt";
-log_target=`./Configuration/set_logging_target.sh`;
-archive_target=`./Configuration/set_archive_target.sh`;
+journal_draft_target="${script_source}\static\journal_draft.txt";
+log_target=`./configuration/set_logging_target.sh`;
+archive_target=`./configuration/set_archive_target.sh`;
 
 date_generated=`date +%T-%A-%d-%b-%m-%Y`;
 
